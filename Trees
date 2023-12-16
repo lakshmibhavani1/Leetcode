@@ -1,32 +1,97 @@
 // MAXIMUM DPETH OF THE BINARY TREE
 
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 
-    public TreeNode(int val) {
-        this.val = val;
-    }
-}
+public class Solution {
 
-public class BinaryTreeDepth {
+/***** MAXIMUM DEPTH OF BINARY TREE  **********/
 
-    public int maxDepth(TreeNode root) {
+/* Recursive approach using Depth-first traveral:
+    Time complexity: O(N) where N is the number of nodes. Follows **Depth-first traversal** manner. 
+    Space Complexity: O(h) where h is the height of the binary tree. 
+        The maximum depth of the call stack is equal to the height of the binary tree. 
+        In the worst case, where the binary tree is skewed (all nodes are in a straight line), the height is equal to the number of nodes, 
+        and the space complexity becomes O(n).
+        In a balanced binary tree, where the height h is log(n), the space complexity is O(log(n)).
+        It's important to note that the space complexity is dominated by the recursive call stack in this implementation. 
+        If an iterative approach using a data structure like a queue is used, the space complexity can be reduced to O(n) in the worst case.
+*/
+
+    public int recursive_maxDepth(TreeNode root) {
         if (root == null) {
             return 0;
         }
 
-        int leftDepth = maxDepth(root.left);
-        int rightDepth = maxDepth(root.right);
+        int leftDepth = recursive_maxDepth(root.left);
+        int rightDepth = recursive_maxDepth(root.right);
 
         // Return the maximum depth of the left and right subtrees, plus 1 for the current node.
         return Math.max(leftDepth, rightDepth) + 1;
     }
 
+
+/*  Iterative approach using level order traversal 
+Time Complexity:
+The time complexity is O(n), where n is the number of nodes in the binary tree.
+In the worst case, the algorithm traverses all nodes in the tree once during the level-order traversal.
+Each node is processed once in the inner loop, and there are a total of n nodes in the tree.
+
+Space Complexity:
+The space complexity is O(w), where w is the maximum width of the binary tree (the maximum number of nodes at any level).
+In the worst case, the queue will contain all the nodes at the widest level of the binary tree.
+The space required is proportional to the maximum width of the tree at any level.
+In a balanced binary tree, the maximum width is typically at the bottom level, and the space complexity becomes O(2^(h-1)), where h is the height of the tree.
+In the worst case, where the tree is skewed (all nodes in a straight line), the maximum width is at the top level, 
+and the space complexity is O(1).
+*/
+        public int iterative_maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int height = 0;
+
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode current = queue.poll();
+
+                if (current.left != null) {
+                    queue.offer(current.left);
+                }
+
+                if (current.right != null) {
+                    queue.offer(current.right);
+                }
+            }
+
+            // Increment the height after processing all nodes at the current level
+            height++;
+        }
+
+        return height;
+    }
+
     public static void main(String[] args) {
         // Example usage
-        BinaryTreeDepth treeDepth = new BinaryTreeDepth();
+        Solution s  = new Solution();
 
         // Construct a sample binary tree
         TreeNode root = new TreeNode(1);
@@ -35,9 +100,11 @@ public class BinaryTreeDepth {
         root.left.left = new TreeNode(4);
         root.left.right = new TreeNode(5);
 
-        // Get the maximum depth
-        int depth = treeDepth.maxDepth(root);
-
+        // Get the maximum depth (also called height)
+        int depth = s.recursive_maxDepth(root);
         System.out.println("Maximum Depth of the Binary Tree: " + depth);
+
+        int height = s.iterative_maxDepth(root);
+        System.out.println("Height of the Binary Tree: " + height);
     }
 }
