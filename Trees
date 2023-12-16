@@ -138,6 +138,47 @@ SPACE COMPLEXITY: O(w), where w is the maximum width (number of nodes at any lev
         return result;
     }
 
+/**************** IS SAME TREE ****************************/
+Given the roots of two binary trees p and q, write a function to check if they are the same or not.
+Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+
+Example 1:
+Input: p = [1,2,3], q = [1,2,3]
+Output: true
+
+Example 2:
+Input: p = [1,2], q = [1,null,2]
+Output: false
+
+Example 3:
+Input: p = [1,2,1], q = [1,1,2]
+Output: false
+
+Time Complexity: O(N),where N is the total number of nodes in the binary tree.
+Space Complexity: The space complexity is O(H), where H is the height of the binary tree.
+    The function uses the call stack for recursion, and the maximum depth of the call stack is equal to the height of the binary tree.
+    In the worst case, the space complexity is O(N) for a skewed tree, where N is the number of nodes.
+
+/**
+
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if(p== null && q!=  null) return false;
+        if(q==null && p!=null) return false;
+        if(p==null && q==null) return true;
+        
+        if(p.val == q.val){
+            if (isSameTree(p.left, q.left) && isSameTree(p.right, q.right) == true)
+                return true;
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+        
+    }
+
 
 
 
@@ -167,6 +208,10 @@ SPACE COMPLEXITY: O(w), where w is the maximum width (number of nodes at any lev
         //LEVEL ORDER TRAVERSAL
         List<List<Integer>> result = solution.levelOrder(root);
         System.out.println(result);
+
+         // Check if the trees are the same
+        boolean result = solution.isSameTree(p, q);
+        System.out.println("Are the trees the same? " + result);
 
 
 
