@@ -179,7 +179,30 @@ Space Complexity: The space complexity is O(H), where H is the height of the bin
         
     }
 
+/********************IS BINARY TREE BALANCED ********************************/
 
+/* BOTTOM UP APPROACH - OPTIMISED 
+The time complexity of this improved solution is O(N), 
+and the space complexity is O(H), where H is the height of the tree.
+*/
+   public boolean isBalanced(TreeNode root) {
+        return checkheight(root)!=-1;
+    }
+    public int checkheight(TreeNode root) {
+        if(root==null)
+            return 0;
+        int lh = checkheight(root.left);
+        if(lh==-1)
+            return -1;
+        int rh = checkheight(root.right);
+        if(rh == -1)
+            return -1;
+        
+        int diff = Math.abs(lh-rh);
+        if(diff > 1)
+            return -1;
+        
+        return Math.max(lh,rh)+1;
 
 
 
