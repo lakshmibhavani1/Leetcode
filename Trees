@@ -206,7 +206,27 @@ and the space complexity is O(H), where H is the height of the tree.
 
 
 
-/**********************-----MAIN-----------******************/
+/************************************ IS SYMMETRIC TREE ************************************************//
+
+public boolean isSymmetric(TreeNode root) {
+        if(root == null){
+            return false;
+        }
+        return isSymmetricUtil(root.left, root.right);
+    }
+
+public boolean isSymmetricUtil(TreeNode r1, TreeNode r2){
+    if(r1== null && r2 == null)
+        return true;
+    if(r1 == null || r2 == null) 
+        return false;
+    if(r1.val == r2.val)
+        return isSymmetricUtil(r1.left, r2.right) && isSymmetricUtil(r1.right, r2.left);
+    return false;
+    
+}
+
+/*************************************-----MAIN-----------********************************************/
 
 
     public static void main(String[] args) {
