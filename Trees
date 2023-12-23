@@ -244,6 +244,8 @@ public void inorderTraversalUtil(TreeNode root, List<Integer> list) {
 }
 
 /*******************************************LOWEST COMMON ANCESTOR***************************************/
+The time complexity of your algorithm is O(N)
+Space Complexity: O(N) 
 
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if(root == null)
@@ -260,6 +262,24 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         else  
             return (l!=null)?  l: r;
 
+    }
+
+/************************************LOWEST COMMON ANCESTOR OF BST ***************************************/
+TIME COMPLEXITY : (LCA) algorithm for a binary search tree is O(log n), where n is the number of nodes in the tree.
+                  This is because in each recursive call, you reduce the search space by half, similar to a binary search.
+
+SPACE COMPLEXITY: The space complexity is O(log n) as well, as it depends on the maximum depth of the recursive call stack. 
+                  In a balanced binary search tree, the maximum depth is log n.
+
+ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null) return root;
+        if(p.val < root.val && q.val < root.val)
+            return lowestCommonAncestor(root.left,p,q);
+        if(p.val > root.val && q.val > root.val)
+            return lowestCommonAncestor(root.right,p,q);
+        else
+            return root;
+        
     }
 
 /*************************************-----MAIN-----------********************************************/
